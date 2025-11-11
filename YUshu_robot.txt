@@ -1,0 +1,146 @@
+📊 完整的CSV文件内容
+1. 机器人零位配置文件 (robot_zero_positions.csv)
+csv
+zero_id,robot_model,joint1,joint2,joint3,joint4,joint5,joint6,base_x,base_y,base_z,accuracy,timestamp,operator
+HOME-001,Yushu_H1,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.005,2024-01-15 10:30:00,张三
+HOME-002,Yushu_H1,0.1,-0.05,0.02,0.0,0.01,0.0,125.5,89.3,0.0,0.008,2024-01-15 11:15:00,李四
+TOOL-001,Yushu_H1,45.2,30.1,-15.3,0.0,25.6,0.0,230.1,156.7,50.2,0.003,2024-01-15 14:20:00,王五
+SAFE-001,Yushu_H1,-30.5,25.2,-10.1,15.3,-5.2,0.0,189.2,134.5,25.8,0.006,2024-01-15 16:45:00,赵六
+2. 车床刀具参数文件 (lathe_tool_parameters.csv)
+csv
+tool_id,tool_type,material,cutting_speed,feed_rate,depth_of_cut,coolant,tool_life,status,last_change
+T001,CNMG120408,45#钢,180,0.2,0.5,Water,4.2,Active,2024-01-10
+T002,DNMG150608,304不锈钢,120,0.15,0.3,Oil,2.8,Wear,2024-01-12
+T003,VNMG160408,Aluminum,250,0.3,0.8,Air,5.5,Active,2024-01-08
+T004,Thread_Tool,Stainless,80,0.1,0.2,Oil,1.5,Replace,2024-01-14
+T005,Boring_Bar,Cast_Iron,100,0.12,0.4,Dry,3.2,Active,2024-01-09
+3. 加工工艺参数库 (machining_parameters.csv)
+csv
+process_id,part_material,operation,tool_id,spindle_speed,feed_rate,depth_cut,step_over,coolant_mode,quality_level
+OP-10,45#钢,Rough_Turning,T001,1500,0.25,2.0,0.8,Flood,Standard
+OP-20,45#钢,Finish_Turning,T002,1800,0.15,0.5,0.3,Flood,Precision
+OP-30,Stainless,Face_Milling,T003,1200,0.18,1.5,0.6,Mist,Standard
+OP-40,Aluminum,Drilling,T004,2500,0.12,5.0,0.0,Flood,HighSpeed
+OP-50,Cast_Iron,Grooving,T002,1000,0.08,3.0,0.4,Dry,Heavy
+4. 机器人动作序列文件 (robot_action_sequence.csv)
+csv
+step,action_type,target_x,target_y,target_z,speed,acceleration,tool_state,wait_time,safety_check
+1,MOVE,125.5,89.3,50.0,30,15,GRIPPER_OPEN,0,ENVELOPE_CHECK
+2,GRIP,125.5,89.3,48.5,10,5,GRIPPER_CLOSE,500,FORCE_LIMIT
+3,MOVE,125.5,89.3,100.0,40,20,GRIPPER_HOLD,0,COLLISION_CHECK
+4,MOVE,230.1,156.7,80.0,35,18,GRIPPER_HOLD,0,PATH_CHECK
+5,PLACE,230.1,156.7,52.0,10,5,GRIPPER_OPEN,1000,POSITION_CHECK
+6,MOVE,230.1,156.7,100.0,40,20,GRIPPER_OPEN,0,SAFE_RETRACT
+5. 质量检测标准文件 (quality_standards.csv)
+csv
+part_id,dimension,nominal,tolerance_upper,tolerance_lower,measure_method,frequency,control_chart
+SHAFT-001,Diameter,50.00,50.01,49.99,Micrometer,1/10hour,XBAR-R
+SHAFT-001,Length,200.0,200.1,199.9,Caliper,1/5hour,XBAR-R
+SHAFT-001,Surface_Ra,1.6,2.0,1.2,Profilometer,1/hour,Individual
+FLANGE-002,Flatness,0.02,0.03,0.0,CMM,1/2hour,Individual
+FLANGE-002,Thickness,25.0,25.05,24.95,Micrometer,1/5hour,XBAR-R
+6. 安全监控参数文件 (safety_monitoring.csv)
+csv
+parameter,normal_min,normal_max,warning_min,warning_max,alarm_min,alarm_max,response_action,check_interval
+Spindle_Speed,800,3000,700,3200,500,3500,EMERGENCY_STOP,100ms
+Feed_Rate,0.1,0.5,0.08,0.6,0.05,0.8,REDUCE_FEED,100ms
+Motor_Temp,20,70,15,80,10,90,SHUTDOWN,1s
+Vibration,0,3,0,5,0,8,STOP_MACHINE,50ms
+Tool_Force,5,50,3,60,1,80,RETRACT_TOOL,100ms
+Current_Load,10,80,5,90,0,100,PAUSE_MACHINE,200ms
+7. 宇树机器人轨迹文件 (yushu_trajectory.csv)
+csv
+point_id,frame,x,y,z,qx,qy,qz,qw,velocity,acceleration,blend_radius,tool_state
+P001,BASE,125.5,89.3,100.0,0.0,0.0,0.0,1.0,0.5,0.3,0.0,GRIPPER_OPEN
+P002,BASE,125.5,89.3,50.0,0.0,0.0,0.0,1.0,0.3,0.2,0.0,GRIPPER_OPEN
+P003,BASE,125.5,89.3,48.5,0.0,0.0,0.0,1.0,0.1,0.1,0.0,GRIPPER_CLOSE
+P004,BASE,125.5,89.3,100.0,0.0,0.0,0.0,1.0,0.4,0.2,5.0,GRIPPER_HOLD
+P005,BASE,230.1,156.7,80.0,0.0,0.0,0.0,1.0,0.4,0.2,8.0,GRIPPER_HOLD
+P006,BASE,230.1,156.7,52.0,0.0,0.0,0.0,1.0,0.2,0.1,0.0,GRIPPER_OPEN
+8. 机器人-车床协作时序 (collaboration_timing.csv)
+csv
+sequence,robot_action,lathe_action,timing_offset,sync_signal,timeout,recovery_action
+1,MOVE_TO_LOAD,CHUCK_OPEN,0.0,START_LOADING,10.0,RETRY_LOAD
+2,LOAD_PART,CHUCK_CLOSE,2.0,PART_LOADED,5.0,EMERGENCY_STOP
+3,MOVE_TO_SAFE,SPINDLE_START,1.0,SAFE_POSITION,3.0,STOP_SPINDLE
+4,WAIT_MONITOR,MACHINING,-1.0,MACHINING_DONE,300.0,ABORT_PROCESS
+5,UNLOAD_PART,SPINDLE_STOP,0.0,UNLOAD_READY,8.0,MANUAL_UNLOAD
+6,MOVE_TO_UNLOAD,CHUCK_OPEN,1.0,UNLOAD_COMPLETE,10.0,ALARM
+9. 传感器配置参数 (sensor_configuration.csv)
+csv
+sensor_id,sensor_type,location,parameter,normal_range,calibration_date,status
+ENC-001,Rotary_Encoder,Joint1,Angle,0-360deg,2024-01-10,Active
+ENC-002,Rotary_Encoder,Joint2,Angle,0-360deg,2024-01-10,Active
+PROBE-001,Contact_Probe,Tool_Tip,Position,±0.002mm,2024-01-12,Active
+VIS-001,Vision_Camera,End_Effector,Image,1920x1080,2024-01-08,Active
+PROX-001,Proximity_Sensor,Gripper,Distance,0-10mm,2024-01-11,Active
+FORCE-001,Force_Sensor,Wrist,Force,0-100N,2024-01-09,Calibration_Needed
+10. 维护保养计划 (maintenance_schedule.csv)
+csv
+equipment_id,maintenance_type,frequency,last_maintenance,next_maintenance,responsible,check_items
+ROBOT-001,Daily,24H,2024-01-15,2024-01-16,Operator,Joint_Lubrication,Battery_Check
+ROBOT-001,Weekly,168H,2024-01-08,2024-01-15,Technician,Encoder_Calibration,Cable_Inspection
+LATHE-001,Daily,24H,2024-01-15,2024-01-16,Operator,Coolant_Level,Chip_Removal
+LATHE-001,Monthly,720H,2023-12-15,2024-01-15,Engineer,Spindle_Bearing,Way_Lubrication
+PROBE-001,Calibration,168H,2024-01-08,2024-01-15,Technician,Accuracy_Check,Tip_Wear
+🎯 使用说明手册 (README.csv)
+csv
+file_name,description,usage,update_frequency,responsible_department
+robot_zero_positions.csv,机器人零位和工具坐标系定义,机器人开机校准和工具设置,每次校准后更新,机器人班组
+lathe_tool_parameters.csv,车床刀具参数库,加工参数选择和刀具寿命管理,每日更新,刀具管理组
+machining_parameters.csv,标准加工工艺参数,数控程序生成和质量控制,工艺变更时更新,工艺工程部
+robot_action_sequence.csv,机器人动作序列定义,自动化上下料程序执行,任务变更时更新,自动化班组
+quality_standards.csv,产品质量检验标准,在线检测和终检判定,标准变更时更新,质量保证部
+safety_monitoring.csv,设备安全运行参数,实时监控和报警处理,参数调整时更新,设备安全部
+yushu_trajectory.csv,宇树机器人运动轨迹,路径规划和碰撞检测,路径优化时更新,机器人编程组
+collaboration_timing.csv,机器人与车床协作时序,协调控制和信号同步,产线调整时更新,自动化工程部
+sensor_configuration.csv,传感器参数配置,数据采集和系统校准,传感器更换时更新,仪表班组
+maintenance_schedule.csv,设备维护保养计划,预防性维护和计划排程,维护完成后更新,设备维护部
+📁 文件创建方法
+方法1：手动创建（推荐）
+打开记事本（Notepad）
+
+复制上面的CSV内容到记事本
+
+保存文件，文件名如 robot_zero_positions.csv
+
+编码选择 UTF-8
+
+方法2：批量创建脚本
+创建一个 create_csv_files.bat 批处理文件：
+
+bat
+@echo off
+echo 正在创建CSV文件...
+
+echo zero_id,robot_model,joint1,joint2,joint3,joint4,joint5,joint6,base_x,base_y,base_z,accuracy,timestamp,operator > robot_zero_positions.csv
+echo HOME-001,Yushu_H1,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.005,2024-01-15 10:30:00,张三 >> robot_zero_positions.csv
+echo HOME-002,Yushu_H1,0.1,-0.05,0.02,0.0,0.01,0.0,125.5,89.3,0.0,0.008,2024-01-15 11:15:00,李四 >> robot_zero_positions.csv
+
+echo tool_id,tool_type,material,cutting_speed,feed_rate,depth_of_cut,coolant,tool_life,status,last_change > lathe_tool_parameters.csv
+echo T001,CNMG120408,45#钢,180,0.2,0.5,Water,4.2,Active,2024-01-10 >> lathe_tool_parameters.csv
+echo T002,DNMG150608,304不锈钢,120,0.15,0.3,Oil,2.8,Wear,2024-01-12 >> lathe_tool_parameters.csv
+
+echo 文件创建完成！
+pause
+🔧 CSV文件用途说明
+文件名称	主要用途	更新频率	负责人
+robot_zero_positions.csv	机器人坐标校准	每次校准后	机器人操作员
+lathe_tool_parameters.csv	刀具管理和寿命追踪	每日	刀具管理员
+machining_parameters.csv	工艺标准和质量控制	工艺变更时	工艺工程师
+robot_action_sequence.csv	自动化程序执行	任务变更时	自动化工程师
+quality_standards.csv	质量检验和SPC控制	标准更新时	质量工程师
+safety_monitoring.csv	设备安全运行监控	参数调整时	安全工程师
+yushu_trajectory.csv	机器人路径规划	路径优化时	机器人程序员
+collaboration_timing.csv	设备间协调控制	产线调整时	自动化工程师
+这些CSV文件构成了完整的机器人和车床控制系统，可以直接用于：
+
+🤖 宇树机器人控制
+
+🔧 车床加工参数设置
+
+📊 质量管理和追溯
+
+🛡️ 安全监控和报警
+
+🔄 维护保养管理
